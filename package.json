@@ -10,15 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "^9.107.1",
-    "@react-three/fiber": "^8.16.8",
+    "@react-three/drei": "^9.103.0",
+    "@react-three/fiber": "^8.16.1",
     "@react-three/xr": "^5.7.1",
-    "@types/three": "^0.165.0",
+    "@types/three": "^0.163.0",
     "leva": "^0.9.35",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "three": "^0.165.0",
-    "webxr-polyfill": "^2.0.3"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "three": "^0.163.0",
+    "webxr-polyfill": "^2.0.3",
+    "@types/react": "^18.2.25"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
