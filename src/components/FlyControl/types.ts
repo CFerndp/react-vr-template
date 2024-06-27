@@ -4,4 +4,5 @@ export type FlyControlProps = {
   movementSpeed?: number;
   rollSpeed?: number;
   bounds?: MapBoundary;
+  shift?: number;
 };

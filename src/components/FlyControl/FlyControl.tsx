@@ -8,6 +8,7 @@ import { FlyControlProps } from "./types";
 const FlyControl: React.FC<FlyControlProps> = ({
   movementSpeed = 10,
   rollSpeed = 0.5,
+  shift = 2,
   bounds,
 }) => {
   const flyingCameraRef = useRef<FlyControlsType>(null);
@@ -18,15 +19,15 @@ const FlyControl: React.FC<FlyControlProps> = ({
       const cameraPosition = flyingCamera.object.position;
 
       if (cameraPosition.x > bounds.x[1] / 2) {
-        flyingCameraRef.current.object.position.x = bounds.x[1] / 2;
+        flyingCameraRef.current.object.position.x = bounds.x[1] / 2 - shift;
       } else if (cameraPosition.x < bounds.x[0] / 2) {
-        flyingCameraRef.current.object.position.x = bounds.x[0] / 2;
+        flyingCameraRef.current.object.position.x = bounds.x[0] / 2 + shift;
       } else if (cameraPosition.z > bounds.z[1] / 2) {
-        flyingCameraRef.current.object.position.z = bounds.z[1] / 2;
+        flyingCameraRef.current.object.position.z = bounds.z[1] / 2 - shift;
       } else if (cameraPosition.z < bounds.z[0] / 2) {
-        flyingCameraRef.current.object.position.z = bounds.z[0] / 2;
-      } else if (cameraPosition.y < bounds.y[0]) {
-        flyingCameraRef.current.object.position.y = bounds.y[0] / 2;
+        flyingCameraRef.current.object.position.z = bounds.z[0] / 2 + shift;
+      } else if (cameraPosition.y <= bounds.y[0]) {
+        flyingCameraRef.current.object.position.y = bounds.y[0] / 2 + shift;
       }
     }
   });
