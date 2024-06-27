@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { Center, Sky, Torus } from "@react-three/drei";
+import { Center, Sky } from "@react-three/drei";
 import { XR } from "@react-three/xr";
-import { Physics, RigidBody } from "@react-three/rapier";
+import { Physics } from "@react-three/rapier";
 import { MAP_BOUNDS } from "./constants";
 import Text3D from "../../components/Text3D/Text3D";
 import Ground from "./partials/Ground/Ground";
