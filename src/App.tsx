@@ -1,17 +1,16 @@
-import { Canvas } from "@react-three/fiber";
 import MainScene from "./scenes/main/MainScene";
 import { VRButton } from "@react-three/xr";
-import { CameraControls } from "@react-three/drei";
+import { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
 
 function App() {
   return (
-    <>
+    <Suspense>
       <VRButton />
       <Canvas>
-        <CameraControls makeDefault={true} />
         <MainScene />
       </Canvas>
-    </>
+    </Suspense>
   );
 }
 
