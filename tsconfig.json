@@ -7,17 +7,5 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ],
-  "compilerOptions": {
-    "jsx": "preserve",
-    "types": [
-      "@react-three/fiber"
-    ]
-  },
-  "include": [
-    "."
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }
