@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { Sky, Torus } from "@react-three/drei";
+import { Center, Sky, Torus } from "@react-three/drei";
 import { XR } from "@react-three/xr";
 import { Physics, RigidBody } from "@react-three/rapier";
-import FlyControl from "../../components/FlyControl/FlyControl";
 import { MAP_BOUNDS } from "./constants";
 import Text3D from "../../components/Text3D/Text3D";
 import Ground from "./partials/Ground/Ground";
+import OrbitalControl from "../../components/OrbitalControl/OrbitalControl";
 
 const MainScene: React.FC = () => {
+  const [text, setText] = useState("0");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randNum = Math.floor(Math.random() * 10);
+      setText(`${randNum}`);
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [text]);
+
   return (
     <XR>
       <Physics>
-        <FlyControl movementSpeed={10} rollSpeed={0.5} bounds={MAP_BOUNDS} />
+        <OrbitalControl bounds={MAP_BOUNDS} />
         <Sky
           distance={45000}
           sunPosition={[0, 4, 0]}
@@ -20,13 +31,12 @@ const MainScene: React.FC = () => {
           azimuth={0.25}
         />
         <Ground />
-        <Text3D position={[-2, 4, -5]} color="blue">
-          Hello VR World!
-        </Text3D>
-
-        <RigidBody colliders={"hull"} restitution={1} position={[0, 2, -5]}>
-          <Torus material-color="red" castShadow />
-        </RigidBody>
+        <Center position={[0, 3, 0]} top>
+          <Text3D color="blue">P300 Number values</Text3D>
+        </Center>
+        <Center position={[0, 1, 0]} top>
+          <Text3D color="red">{text}</Text3D>
+        </Center>
       </Physics>
     </XR>
   );
