@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import { VRButton, XR } from "@react-three/xr";
 import { Canvas } from "@react-three/fiber";
 import P300 from "../../experiments/P300/P300";
 
-const VRScene: React.FC = () => {
+const TwoDScene: React.FC = () => {
   const [text, setText] = useState("0");
 
   useEffect(() => {
@@ -17,15 +16,10 @@ const VRScene: React.FC = () => {
   }, [text]);
 
   return (
-    <>
-      <VRButton />
-      <Canvas className="w-screen h-screen">
-        <XR>
-          <P300 />
-        </XR>
-      </Canvas>
-    </>
+    <Canvas className="w-screen h-screen">
+      <P300 />
+    </Canvas>
   );
 };
 
-export default VRScene;
+export default TwoDScene;
