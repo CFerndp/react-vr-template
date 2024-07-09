@@ -2,18 +2,59 @@ import { Center, Sky } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
 import React, { useEffect, useState } from "react";
 import Text3D from "../../components/Text3D/Text3D";
+import { useFrame } from "@react-three/fiber";
+
+enum ExperimentState {
+  I3,
+  I2,
+  I1,
+  START,
+}
+
+const getTextFromState = (state: ExperimentState) => {
+  switch (state) {
+    case ExperimentState.I3:
+      return "Experiment will start in 3s";
+    case ExperimentState.I2:
+      return "Experiment will start in 2s";
+    case ExperimentState.I1:
+      return "Experiment will start in 1s";
+    case ExperimentState.START:
+      return "Start";
+  }
+};
 
 const P300: React.FC = () => {
-  const [text, setText] = useState("0");
+  const [state, setState] = useState(ExperimentState.I3);
+  const [text, setText] = useState(getTextFromState(ExperimentState.I3));
+  const [init, setInit] = useState(false);
+
+  useFrame(() => {
+    if (!init) {
+      setInit(true);
+      setTimeout(() => {
+        setState(ExperimentState.I2);
+        setTimeout(() => {
+          setState(ExperimentState.I1);
+          setTimeout(() => {
+            setState(ExperimentState.START);
+          }, 1000);
+        }, 1000);
+      }, 1000);
+    }
+  });
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const randNum = Math.floor(Math.random() * 10);
-      setText(`${randNum}`);
-    }, 500);
+    if (state !== ExperimentState.START) {
+      setText(getTextFromState(state));
+    } else {
+      const interval = setInterval(() => {
+        setText(`${Math.floor(Math.random() * 10) + 1}`);
+      }, 400);
 
-    return () => clearInterval(interval);
-  }, [text]);
+      return () => clearInterval(interval);
+    }
+  }, [state]);
 
   return (
     <Physics>
@@ -23,9 +64,6 @@ const P300: React.FC = () => {
         inclination={0.5}
         azimuth={0.25}
       />
-      <Center position={[0, 3, -5]} top>
-        <Text3D color="blue">P300 Number values</Text3D>
-      </Center>
       <Center position={[0, 1, -5]} top>
         <Text3D color="red">{text}</Text3D>
       </Center>
