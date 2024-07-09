@@ -23,10 +23,10 @@ const P300: React.FC = () => {
         inclination={0.5}
         azimuth={0.25}
       />
-      <Center position={[0, 3, 0]} top>
+      <Center position={[0, 3, -5]} top>
         <Text3D color="blue">P300 Number values</Text3D>
       </Center>
-      <Center position={[0, 1, 0]} top>
+      <Center position={[0, 1, -5]} top>
         <Text3D color="red">{text}</Text3D>
       </Center>
     </Physics>

@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { VRButton, XR } from "@react-three/xr";
-import { Canvas } from "@react-three/fiber";
 import P300 from "../../experiments/P300/P300";
+import { useTeleportation, useXR } from "@react-three/xr";
+import { useFrame } from "@react-three/fiber";
 
 const VRScene: React.FC = () => {
-  const [text, setText] = useState("0");
+  const [isInit, setInit] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const randNum = Math.floor(Math.random() * 10);
-      setText(`${randNum}`);
-    }, 500);
+  const { isPresenting } = useXR();
+  const teleportation = useTeleportation();
 
-    return () => clearInterval(interval);
-  }, [text]);
+  useFrame(() => {
+    if (isPresenting && !isInit) {
+      teleportation([1, 4, 2]);
+      setInit(true);
+    }
+  });
 
-  return (
-    <>
-      <VRButton />
-      <Canvas className="w-screen h-screen">
-        <XR>
-          <P300 />
-        </XR>
-      </Canvas>
-    </>
-  );
+  return <P300 />;
 };
 
 export default VRScene;
