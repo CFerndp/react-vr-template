@@ -10,7 +10,7 @@ import { Button } from "@nextui-org/react";
 
 const NotFound: React.FC = () => {
   return (
-    <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
+    <div className="dark flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-md text-center">
         <div className="mx-auto h-32 w-32 rounded-full bg-primary/10 p-6">
           <svg
@@ -31,10 +31,10 @@ const NotFound: React.FC = () => {
             <line x1="15" x2="15.01" y1="9" y2="9" />
           </svg>
         </div>
-        <h1 className="mt-6 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+        <h1 className="mt-6 text-3xl font-bold tracking-tight text-sky-50 sm:text-4xl">
           Oops, page not found!
         </h1>
-        <p className="mt-4 text-muted-foreground">
+        <p className="mt-4 text-sky-100">
           The page you're looking for doesn't exist or has been moved. Don't
           worry, we're here to help you find what you need.
         </p>
