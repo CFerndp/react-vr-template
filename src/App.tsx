@@ -1,13 +1,13 @@
 import { Suspense } from "react";
 
 import { NextUIProvider } from "@nextui-org/react";
-import Home from "./pages/Home/Home";
+import Router from "./router/Router";
 
 function App() {
   return (
     <Suspense>
       <NextUIProvider>
-        <Home />
+        <Router />
       </NextUIProvider>
     </Suspense>
   );
