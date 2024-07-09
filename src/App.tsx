@@ -1,15 +1,14 @@
-import MainScene from "./scenes/main/MainScene";
-import { VRButton } from "@react-three/xr";
 import { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+
+import { NextUIProvider } from "@nextui-org/react";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
     <Suspense>
-      <VRButton />
-      <Canvas>
-        <MainScene />
-      </Canvas>
+      <NextUIProvider>
+        <Home />
+      </NextUIProvider>
     </Suspense>
   );
 }
