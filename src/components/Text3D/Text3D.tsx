@@ -1,18 +1,23 @@
+import React from "react";
+
 import { Text3D as Text3DImpl } from "@react-three/drei";
 import { Text3DProps } from "./types";
 import { FONT } from "./constants";
+import { Mesh } from "three";
 
-const Text3D: React.FC<Text3DProps> = ({
-  children,
-  font = FONT,
-  position,
-  color,
-}) => {
-  return (
-    <Text3DImpl font={font} position={position} material-color={color}>
-      {children}
-    </Text3DImpl>
-  );
-};
+const Text3D = React.forwardRef<Mesh, Text3DProps>(
+  ({ children, font = FONT, position, color }, ref) => {
+    return (
+      <Text3DImpl
+        font={font}
+        position={position}
+        material-color={color}
+        ref={ref}
+      >
+        {children}
+      </Text3DImpl>
+    );
+  }
+);
 
-export default Text3D;
+export default React.memo(Text3D);
