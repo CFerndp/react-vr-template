@@ -50,7 +50,7 @@ const P300: React.FC = () => {
     // });
 
     if (instructionRef.current && numberP300Ref.current) {
-      if (state === ExperimentState.I3 && elapsedTime < 0.1) {
+      if (state === ExperimentState.I3 && elapsedTime < 1) {
         // Init Frame
         numberP300Ref.current.visible = false;
       } else if (state === ExperimentState.I3 && elapsedTime >= 1) {
