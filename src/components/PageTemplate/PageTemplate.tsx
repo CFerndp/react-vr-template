@@ -4,7 +4,7 @@ import { PageTemplateProps } from "./types";
 
 const PageTemplate: React.FC<PageTemplateProps> = ({
   children,
-  fullScreen,
+  fullScreen = true,
 }) => {
   return (
     <main
