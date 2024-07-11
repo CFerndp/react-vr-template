@@ -1,6 +1,6 @@
 import { Center, Sky } from "@react-three/drei";
 import { Physics } from "@react-three/rapier";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Text3D from "../../components/Text3D/Text3D";
 import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
