@@ -4,6 +4,7 @@ import React, { useRef, useState } from "react";
 import Text3D from "../../components/Text3D/Text3D";
 import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
+import { useEEGGateway } from "../../states/EEGGatewayState";
 
 enum ExperimentState {
   I3,
@@ -38,6 +39,8 @@ const P300: React.FC = () => {
   const [numberP300, setNumberP300] = useState("5");
   const [numberOfStimuluss, setNumberOfStimulus] = useState(0);
 
+  const eegGateway = useEEGGateway();
+
   const instructionRef = useRef<Mesh>(null);
   const numberP300Ref = useRef<Mesh>(null);
 
@@ -63,6 +66,8 @@ const P300: React.FC = () => {
         setText(getTextFromState(ExperimentState.I1));
       } else if (state === ExperimentState.I1 && elapsedTime >= 1) {
         setState(ExperimentState.SHOW);
+        eegGateway.startExperiment();
+
         instructionRef.current.visible = false;
         numberP300Ref.current.visible = true;
         setNumberP300(getRandomNumber());
@@ -79,8 +84,11 @@ const P300: React.FC = () => {
         setNumberP300(getRandomNumber());
         numberP300Ref.current.visible = true;
 
+        eegGateway.recordTimestamp();
+
         if (numberOfStimuluss >= MAX_STIMULUS) {
           setState(ExperimentState.STOP);
+          eegGateway.stop();
         } else {
           setState(ExperimentState.SHOW);
         }

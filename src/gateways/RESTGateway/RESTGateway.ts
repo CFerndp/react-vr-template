@@ -1,7 +1,7 @@
 import { EEGGateway } from "../EEGGateway/EEGGateway";
 import { REST_PATHS } from "./constants";
 
-class RESTGateway implements EEGGateway {
+export class RESTGateway implements EEGGateway {
   async startExperiment(): Promise<void> {
     await fetch(REST_PATHS.START_EXPERIMENT);
   }
@@ -12,5 +12,3 @@ class RESTGateway implements EEGGateway {
     await fetch(REST_PATHS.START_EXPERIMENT);
   }
 }
-
-export default new RESTGateway();
