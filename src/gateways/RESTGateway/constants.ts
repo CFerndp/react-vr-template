@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/enobio_binding";
+const BASE_URL = "http://localhost:8000/enobio_binding";
 
 export const REST_PATHS = {
   START_EXPERIMENT: `${BASE_URL}/start_experiment`,
