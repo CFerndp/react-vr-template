@@ -12,8 +12,10 @@ export class RESTGateway implements EEGGateway {
   async startExperiment(): Promise<void> {
     await fetch(this.REST_PATHS.START_EXPERIMENT, { method: "POST" });
   }
-  async recordTimestamp(): Promise<void> {
-    await fetch(this.REST_PATHS.RECORD_TIMESTAMP, { method: "POST" });
+  async recordTimestamp(id: number): Promise<void> {
+    await fetch(`${this.REST_PATHS.RECORD_TIMESTAMP}/${id}`, {
+      method: "POST",
+    });
   }
   async stop(): Promise<void> {
     await fetch(this.REST_PATHS.START_EXPERIMENT, { method: "POST" });

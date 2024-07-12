@@ -80,7 +80,7 @@ const P300: React.FC = () => {
         setNumberP300(getRandomNumber());
         numberP300Ref.current.visible = true;
 
-        eegGateway.recordTimestamp();
+        eegGateway.recordTimestamp(numberOfStimuluss);
 
         if (numberOfStimuluss >= MAX_STIMULUS) {
           setState(ExperimentState.STOP);
