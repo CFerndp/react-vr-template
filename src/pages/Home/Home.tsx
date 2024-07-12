@@ -29,16 +29,16 @@ const Home: React.FC = () => {
   const onSave = () => {
     if (isTestGateway) {
       setEEGGateway(new TestGateway());
-      toast("Configuración guardada con exito en modo debug", {
+      toast(t("toast.title.success.debug"), {
         type: "success",
       });
     } else if (restIP && restPORT) {
       setEEGGateway(new RESTGateway(restIP, restPORT));
-      toast("Configuración guardada con exito", {
+      toast(t("toast.title.success"), {
         type: "success",
       });
     } else {
-      toast("Configuración invalida", {
+      toast(t("toast.title.error"), {
         type: "error",
       });
     }
@@ -74,15 +74,15 @@ const Home: React.FC = () => {
           isSelected={isTestGateway}
           onChange={onChangeDebugMode}
         >
-          Debug mode
+          {t("debug.label")}
         </Switch>
         {isTestGateway ? null : (
           <div>
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4 mb-5">
               <Input
                 type="text"
-                label="REST Server IP"
-                placeholder="127.0.0.1"
+                label={t("ip.input.label")}
+                placeholder={t("ip.input.placeholder")}
                 value={restIP}
                 onChange={(e) => setRestIP(e.target.value)}
               />
@@ -90,8 +90,8 @@ const Home: React.FC = () => {
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4 mb-5">
               <Input
                 type="text"
-                label="REST Server Port"
-                placeholder="8000"
+                label={t("port.input.label")}
+                placeholder={t("port.input.placeholder")}
                 value={restPORT}
                 onChange={(e) => setRestPORT(e.target.value)}
               />
