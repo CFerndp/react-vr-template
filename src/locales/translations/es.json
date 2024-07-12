@@ -2,6 +2,8 @@
     "home":{
         "button.vr":"Iniciar experimento VR",
         "button.2d":"Iniciar experimento 2D",
-        "title.label":"BCI 300"
+        "title.label":"BCI 300",
+        "config.title": "Configuración",
+        "button.save": "Guardar"
     }
 }

@@ -4,7 +4,8 @@ import React, { useRef, useState } from "react";
 import Text3D from "../../components/Text3D/Text3D";
 import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
-import { useEEGGateway } from "../../states/EEGGatewayState";
+import { useRecoilValue } from "recoil";
+import { EEGGatewayAtom } from "../../states/EEGGatewayState";
 
 enum ExperimentState {
   I3,
@@ -39,18 +40,13 @@ const P300: React.FC = () => {
   const [numberP300, setNumberP300] = useState("5");
   const [numberOfStimuluss, setNumberOfStimulus] = useState(0);
 
-  const eegGateway = useEEGGateway();
+  const eegGateway = useRecoilValue(EEGGatewayAtom);
 
   const instructionRef = useRef<Mesh>(null);
   const numberP300Ref = useRef<Mesh>(null);
 
   useFrame((rootState) => {
     const elapsedTime = rootState.clock.getElapsedTime();
-
-    // console.log({
-    //   elapsedTime: rootState.clock.getElapsedTime(),
-    //   delta: rootState.clock.getDelta(),
-    // });
 
     if (instructionRef.current && numberP300Ref.current) {
       if (state === ExperimentState.I3 && elapsedTime < 1) {

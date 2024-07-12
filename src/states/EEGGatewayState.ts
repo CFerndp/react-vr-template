@@ -1,14 +1,10 @@
 import { RESTGateway } from "../gateways/RESTGateway/RESTGateway";
-import { TestGateway } from "../gateways/TestGateway/TESTGateway";
+// import { TestGateway } from "../gateways/TestGateway/TESTGateway";
 import { EEGGateway } from "./../gateways/EEGGateway/EEGGateway";
-import { atom, useRecoilValue } from "recoil";
+import { atom } from "recoil";
 
-const EEGGatewayAtom = atom<EEGGateway>({
+export const EEGGatewayAtom = atom<EEGGateway>({
   key: "eegGateway", // unique ID (with respect to other atoms/selectors)
-  //   default: new RESTGateway(), // default value (aka initial value)
-  default: new TestGateway(),
+  default: new RESTGateway("127.0.0.1", "8000"), // default value (aka initial value)
+  // default: new TestGateway(),
 });
-
-export const useEEGGateway = () => {
-  return useRecoilValue(EEGGatewayAtom);
-};

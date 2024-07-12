@@ -5,15 +5,19 @@ import { NextUIProvider } from "@nextui-org/react";
 import Router from "./router/Router";
 
 import "./locales/i18n";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <Suspense>
-      <NextUIProvider>
-        <RecoilRoot>
+      <RecoilRoot>
+        <NextUIProvider>
           <Router />
-        </RecoilRoot>
-      </NextUIProvider>
+          <ToastContainer />
+        </NextUIProvider>
+      </RecoilRoot>
     </Suspense>
   );
 }
