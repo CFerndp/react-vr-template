@@ -1,5 +1,5 @@
 export interface EEGGateway {
-  startExperiment(): Promise<void>;
+  startExperiment(id: number): Promise<void>;
   recordTimestamp(id: number): Promise<void>;
   stop(): Promise<void>;
 }

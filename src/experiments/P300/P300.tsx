@@ -5,6 +5,7 @@ import Text3D from "../../components/Text3D/Text3D";
 import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
 import { useEEGGateway } from "../../gateways/hooks";
+import { getNumbersByOddParadigm } from "./utils";
 
 enum ExperimentState {
   I3,
@@ -15,14 +16,16 @@ enum ExperimentState {
   STOP,
 }
 
-const getTextFromState = (state: ExperimentState) => {
+const TARGET = "2";
+
+const getTextFromState = (state: ExperimentState, target: string) => {
   switch (state) {
     case ExperimentState.I3:
-      return "Experiment will start in 3s";
+      return `How many times appear number ${target}? Start: 3s`;
     case ExperimentState.I2:
-      return "Experiment will start in 2s";
+      return `How many times appear number ${target}? Start: 2s`;
     case ExperimentState.I1:
-      return "Experiment will start in 1s";
+      return `How many times appear number ${target}? Start: 1s`;
     case ExperimentState.STOP:
       return "Experiment stopped";
     default:
@@ -30,14 +33,17 @@ const getTextFromState = (state: ExperimentState) => {
   }
 };
 
-const getRandomNumber = () => `${Math.floor(Math.random() * 10) + 1}`;
-const MAX_STIMULUS = 20;
+const MAX_STIMULUS = 6;
+const MAX_TRAIALS = 20;
 
 const P300: React.FC = () => {
   const [state, setState] = useState(ExperimentState.I3);
-  const [text, setText] = useState(getTextFromState(ExperimentState.I3));
+  const [text, setText] = useState(
+    getTextFromState(ExperimentState.I3, TARGET)
+  );
   const [numberP300, setNumberP300] = useState("5");
-  const [numberOfStimuluss, setNumberOfStimulus] = useState(0);
+  const [stimulus, setStimulus] = useState<number[]>([]);
+  const [numberOfTrials, setNumberOfTrials] = useState(0);
 
   const eegGateway = useEEGGateway();
 
@@ -54,43 +60,55 @@ const P300: React.FC = () => {
       } else if (state === ExperimentState.I3 && elapsedTime >= 1) {
         rootState.clock.start();
         setState(ExperimentState.I2);
-        setText(getTextFromState(ExperimentState.I2));
+        setText(getTextFromState(ExperimentState.I2, TARGET));
       } else if (state === ExperimentState.I2 && elapsedTime >= 1) {
         rootState.clock.start();
         setState(ExperimentState.I1);
-        setText(getTextFromState(ExperimentState.I1));
+        setText(getTextFromState(ExperimentState.I1, TARGET));
       } else if (state === ExperimentState.I1 && elapsedTime >= 1) {
         setState(ExperimentState.SHOW);
-        eegGateway.startExperiment();
+        eegGateway.startExperiment(2);
 
         instructionRef.current.visible = false;
         numberP300Ref.current.visible = true;
-        setNumberP300(getRandomNumber());
+        const newStimulus = getNumbersByOddParadigm(MAX_STIMULUS);
+        const numberToShow = newStimulus.pop();
+        setStimulus(newStimulus);
+        setNumberP300(numberToShow?.toString() || "");
 
         rootState.clock.start();
       } else if (state === ExperimentState.SHOW && elapsedTime >= 0.1) {
-        setNumberOfStimulus((numberOfStimuluss) => numberOfStimuluss + 1);
         rootState.clock.start();
         numberP300Ref.current.visible = false;
         setState(ExperimentState.HIDE);
       } else if (state === ExperimentState.HIDE && elapsedTime >= 0.3) {
         rootState.clock.start();
 
-        setNumberP300(getRandomNumber());
-        numberP300Ref.current.visible = true;
+        let numberToShow = stimulus.pop();
 
-        eegGateway.recordTimestamp(numberOfStimuluss);
+        if (numberToShow === undefined) {
+          setNumberOfTrials(numberOfTrials + 1);
 
-        if (numberOfStimuluss >= MAX_STIMULUS) {
-          setState(ExperimentState.STOP);
-          eegGateway.stop();
-        } else {
-          setState(ExperimentState.SHOW);
+          if (numberOfTrials < MAX_TRAIALS - 1) {
+            const newStimulus = getNumbersByOddParadigm(MAX_STIMULUS);
+            numberToShow = newStimulus.pop() || -1;
+
+            setStimulus(newStimulus);
+          } else {
+            setState(ExperimentState.STOP);
+            eegGateway.stop();
+            return;
+          }
         }
+
+        setNumberP300(numberToShow.toString() || "");
+        numberP300Ref.current.visible = true;
+        eegGateway.recordTimestamp(numberToShow);
+        setState(ExperimentState.SHOW);
       } else if (state === ExperimentState.STOP) {
         instructionRef.current.visible = true;
         numberP300Ref.current.visible = false;
-        setText(getTextFromState(ExperimentState.STOP));
+        setText(getTextFromState(ExperimentState.STOP, TARGET));
       }
     }
   });
