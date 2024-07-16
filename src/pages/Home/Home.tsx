@@ -6,16 +6,12 @@ import { useTranslation } from "react-i18next";
 import PageTemplate from "../../components/PageTemplate/PageTemplate";
 import { Divider, Input } from "@nextui-org/react";
 
-import { RESTGateway } from "../../gateways/RESTGateway/RESTGateway";
-import { toast } from "react-toastify";
-import { TestGateway } from "../../gateways/TestGateway/TESTGateway";
 import { useRecoilState } from "recoil";
 import {
   debugModeAtom,
   restAPIIPAtom,
   restAPIPORTAtom,
 } from "../../states/configState";
-import { EEGGatewayAtom } from "../../states/EEGGatewayState";
 
 const Home: React.FC = () => {
   const { t } = useTranslation("home");
@@ -23,26 +19,6 @@ const Home: React.FC = () => {
   const [restPORT, setRestPORT] = useRecoilState(restAPIPORTAtom);
 
   const [isTestGateway, setIsTestGateway] = useRecoilState(debugModeAtom);
-
-  const [, setEEGGateway] = useRecoilState(EEGGatewayAtom);
-
-  const onSave = () => {
-    if (isTestGateway) {
-      setEEGGateway(new TestGateway());
-      toast(t("toast.title.success.debug"), {
-        type: "success",
-      });
-    } else if (restIP && restPORT) {
-      setEEGGateway(new RESTGateway(restIP, restPORT));
-      toast(t("toast.title.success"), {
-        type: "success",
-      });
-    } else {
-      toast(t("toast.title.error"), {
-        type: "error",
-      });
-    }
-  };
 
   const onChangeDebugMode: React.ChangeEventHandler<HTMLInputElement> = (
     event
@@ -98,11 +74,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         )}
-        <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
-          <Button size="lg" color="success" variant="shadow" onClick={onSave}>
-            {t("button.save")}
-          </Button>
-        </div>
       </section>
     </PageTemplate>
   );

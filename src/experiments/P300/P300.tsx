@@ -4,8 +4,7 @@ import React, { useRef, useState } from "react";
 import Text3D from "../../components/Text3D/Text3D";
 import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
-import { useRecoilValue } from "recoil";
-import { EEGGatewayAtom } from "../../states/EEGGatewayState";
+import { useEEGGateway } from "../../gateways/hooks";
 
 enum ExperimentState {
   I3,
@@ -40,7 +39,7 @@ const P300: React.FC = () => {
   const [numberP300, setNumberP300] = useState("5");
   const [numberOfStimuluss, setNumberOfStimulus] = useState(0);
 
-  const eegGateway = useRecoilValue(EEGGatewayAtom);
+  const eegGateway = useEEGGateway();
 
   const instructionRef = useRef<Mesh>(null);
   const numberP300Ref = useRef<Mesh>(null);
