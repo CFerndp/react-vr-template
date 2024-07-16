@@ -6,48 +6,37 @@ import { useTranslation } from "react-i18next";
 import PageTemplate from "../../components/PageTemplate/PageTemplate";
 import { Divider, Input } from "@nextui-org/react";
 
-import { RESTGateway } from "../../gateways/RESTGateway/RESTGateway";
-import { toast } from "react-toastify";
-import { TestGateway } from "../../gateways/TestGateway/TESTGateway";
-import { useRecoilState } from "recoil";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
-  debugModeAtom,
-  restAPIIPAtom,
-  restAPIPORTAtom,
-} from "../../states/configState";
-import { EEGGatewayAtom } from "../../states/EEGGatewayState";
+  selectConfigState,
+  setDebugMode,
+  setRestAPIIP,
+  setRestAPIPORT,
+} from "../../redux/stores/config/configStore";
 
 const Home: React.FC = () => {
   const { t } = useTranslation("home");
-  const [restIP, setRestIP] = useRecoilState(restAPIIPAtom);
-  const [restPORT, setRestPORT] = useRecoilState(restAPIPORTAtom);
+  const { restAPIIP, debugMode, restAPIPORT } =
+    useAppSelector(selectConfigState);
 
-  const [isTestGateway, setIsTestGateway] = useRecoilState(debugModeAtom);
-
-  const [, setEEGGateway] = useRecoilState(EEGGatewayAtom);
-
-  const onSave = () => {
-    if (isTestGateway) {
-      setEEGGateway(new TestGateway());
-      toast(t("toast.title.success.debug"), {
-        type: "success",
-      });
-    } else if (restIP && restPORT) {
-      setEEGGateway(new RESTGateway(restIP, restPORT));
-      toast(t("toast.title.success"), {
-        type: "success",
-      });
-    } else {
-      toast(t("toast.title.error"), {
-        type: "error",
-      });
-    }
-  };
+  const dispatch = useAppDispatch();
 
   const onChangeDebugMode: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
-    setIsTestGateway(event.currentTarget.checked);
+    dispatch(setDebugMode(event.currentTarget.checked));
+  };
+
+  const onChangeRestAPIIP: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    dispatch(setRestAPIIP(event.currentTarget.value));
+  };
+
+  const onChangeRestAPIPORT: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    dispatch(setRestAPIPORT(event.currentTarget.value));
   };
 
   return (
@@ -71,20 +60,20 @@ const Home: React.FC = () => {
         <h2 className="text-3xl font-bold mb-5">{t("config.title")}</h2>
         <Switch
           className="mb-5"
-          isSelected={isTestGateway}
+          isSelected={debugMode}
           onChange={onChangeDebugMode}
         >
           {t("debug.label")}
         </Switch>
-        {isTestGateway ? null : (
-          <div>
+        {debugMode ? null : (
+          <>
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4 mb-5">
               <Input
                 type="text"
                 label={t("ip.input.label")}
                 placeholder={t("ip.input.placeholder")}
-                value={restIP}
-                onChange={(e) => setRestIP(e.target.value)}
+                value={restAPIIP}
+                onChange={onChangeRestAPIIP}
               />
             </div>
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4 mb-5">
@@ -92,17 +81,12 @@ const Home: React.FC = () => {
                 type="text"
                 label={t("port.input.label")}
                 placeholder={t("port.input.placeholder")}
-                value={restPORT}
-                onChange={(e) => setRestPORT(e.target.value)}
+                value={restAPIPORT}
+                onChange={onChangeRestAPIPORT}
               />
             </div>
-          </div>
+          </>
         )}
-        <div className="flex w-full flex-wrap md:flex-nowrap gap-4 justify-center">
-          <Button size="lg" color="success" variant="shadow" onClick={onSave}>
-            {t("button.save")}
-          </Button>
-        </div>
       </section>
     </PageTemplate>
   );

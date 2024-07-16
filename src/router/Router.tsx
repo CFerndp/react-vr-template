@@ -1,10 +1,11 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Route, Switch } from "wouter";
-import Home from "../pages/Home/Home";
 import { Routes } from "./routes";
-import NotFound from "../pages/NotFound/NotFound";
-import VR from "../pages/VR/VR";
-import TwoD from "../pages/TwoD/TwoD";
+
+const Home = lazy(() => import("../pages/Home/Home"));
+const VR = lazy(() => import("../pages/VR/VR"));
+const TwoD = lazy(() => import("../pages/TwoD/TwoD"));
+const NotFound = lazy(() => import("../pages/NotFound/NotFound"));
 
 const Router: React.FC = () => {
   return (
