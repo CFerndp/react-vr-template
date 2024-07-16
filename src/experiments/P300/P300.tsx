@@ -27,7 +27,7 @@ const getTextFromState = (state: ExperimentState, target: string) => {
     case ExperimentState.I1:
       return `How many times appear number ${target}? Start: 1s`;
     case ExperimentState.STOP:
-      return "Experiment stopped";
+      return "Experiment stopped. Target: " + target;
     default:
       return "";
   }
