@@ -18,6 +18,8 @@ enum ExperimentState {
 
 const TARGET = "2";
 
+// Add record timpestamp from init 100ms end 100ms
+
 const getTextFromState = (state: ExperimentState, target: string) => {
   switch (state) {
     case ExperimentState.I3:
@@ -96,7 +98,6 @@ const P300: React.FC = () => {
             setStimulus(newStimulus);
           } else {
             setState(ExperimentState.STOP);
-            eegGateway.stop();
             return;
           }
         }
@@ -108,6 +109,7 @@ const P300: React.FC = () => {
       } else if (state === ExperimentState.STOP) {
         instructionRef.current.visible = true;
         numberP300Ref.current.visible = false;
+        eegGateway.stop();
         setText(getTextFromState(ExperimentState.STOP, TARGET));
       }
     }
