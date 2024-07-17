@@ -5,7 +5,11 @@ import Text3D from "../../components/Text3D/Text3D";
 import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
 import { useEEGGateway } from "../../gateways/hooks";
-import { getNumbersByOddParadigm } from "./utils";
+import {
+  getNumbersByOddParadigm,
+  getStartMarkerFromNumber,
+  getStopMarkerFromNumber,
+} from "./utils";
 
 enum ExperimentState {
   I3,
@@ -69,7 +73,7 @@ const P300: React.FC = () => {
         setText(getTextFromState(ExperimentState.I1, TARGET));
       } else if (state === ExperimentState.I1 && elapsedTime >= 1) {
         setState(ExperimentState.SHOW);
-        eegGateway.startExperiment(2);
+        eegGateway.startExperiment(TARGET);
 
         instructionRef.current.visible = false;
         numberP300Ref.current.visible = true;
@@ -83,6 +87,7 @@ const P300: React.FC = () => {
         rootState.clock.start();
         numberP300Ref.current.visible = false;
         setState(ExperimentState.HIDE);
+        eegGateway.recordTimestamp(getStopMarkerFromNumber(numberP300));
       } else if (state === ExperimentState.HIDE && elapsedTime >= 0.3) {
         rootState.clock.start();
 
@@ -104,7 +109,7 @@ const P300: React.FC = () => {
 
         setNumberP300(numberToShow.toString() || "");
         numberP300Ref.current.visible = true;
-        eegGateway.recordTimestamp(numberToShow);
+        eegGateway.recordTimestamp(getStartMarkerFromNumber(numberToShow));
         setState(ExperimentState.SHOW);
       } else if (state === ExperimentState.STOP) {
         instructionRef.current.visible = true;
