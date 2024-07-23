@@ -1,3 +1,4 @@
+import axios from "axios";
 import { EEGGateway } from "../EEGGateway/EEGGateway";
 import { RestPaths } from "./types";
 import { getBaseUrl, getRestPaths } from "./utils";
@@ -9,17 +10,18 @@ export class RESTGateway implements EEGGateway {
     const baseUrl = getBaseUrl(ip, port);
     this.REST_PATHS = getRestPaths(baseUrl);
   }
+
+  async makePostRequest(url: string, data: unknown = {}) {
+    return await axios.post(url, data);
+  }
+
   async startExperiment(marker: string): Promise<void> {
-    await fetch(`${this.REST_PATHS.START_EXPERIMENT}/${marker}`, {
-      method: "POST",
-    });
+    await this.makePostRequest(`${this.REST_PATHS.START_EXPERIMENT}/${marker}`);
   }
   async recordTimestamp(marker: string): Promise<void> {
-    await fetch(`${this.REST_PATHS.RECORD_TIMESTAMP}/${marker}`, {
-      method: "POST",
-    });
+    await this.makePostRequest(`${this.REST_PATHS.RECORD_TIMESTAMP}/${marker}`);
   }
   async stop(): Promise<void> {
-    await fetch(this.REST_PATHS.START_EXPERIMENT, { method: "POST" });
+    await this.makePostRequest(this.REST_PATHS.START_EXPERIMENT);
   }
 }
