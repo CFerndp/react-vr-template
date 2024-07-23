@@ -18,6 +18,7 @@ enum ExperimentState {
   SHOW,
   HIDE,
   STOP,
+  END,
 }
 
 const TARGET = "2";
@@ -116,6 +117,7 @@ const P300: React.FC = () => {
         numberP300Ref.current.visible = false;
         eegGateway.stop();
         setText(getTextFromState(ExperimentState.STOP, TARGET));
+        setState(ExperimentState.END);
       }
     }
   });

@@ -1,7 +1,7 @@
 import { RestPaths } from "./types";
 
 export const getBaseUrl = (ip: string, port: string) =>
-  `https://${ip}:${port}/enobio_binding`;
+  `http://${ip}:${port}/enobio_binding`;
 
 export const getRestPaths = (baseUrl: string): RestPaths => ({
   START_EXPERIMENT: `${baseUrl}/start_experiment`,
