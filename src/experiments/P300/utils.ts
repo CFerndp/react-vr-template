@@ -11,10 +11,13 @@ export const getNumbersByOddParadigm = (max: number): number[] => {
   return array;
 };
 
-export const getStartMarkerFromNumber = (number: number | string): string => {
-  return `SHOW-${number}`;
+const SHOW_MARKER = 10;
+const HIDE_MARKER = 20;
+
+export const getStartMarkerFromNumber = (number: number): number => {
+  return SHOW_MARKER + number;
 };
 
-export const getStopMarkerFromNumber = (number: number | string): string => {
-  return `HIDE-${number}`;
+export const getStopMarkerFromNumber = (number: number): number => {
+  return HIDE_MARKER + number;
 };

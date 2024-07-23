@@ -15,10 +15,10 @@ export class RESTGateway implements EEGGateway {
     return await axios.post(url, data);
   }
 
-  async startExperiment(marker: string): Promise<void> {
+  async startExperiment(marker: number): Promise<void> {
     await this.makePostRequest(`${this.REST_PATHS.START_EXPERIMENT}/${marker}`);
   }
-  async recordTimestamp(marker: string): Promise<void> {
+  async recordTimestamp(marker: number): Promise<void> {
     await this.makePostRequest(`${this.REST_PATHS.RECORD_TIMESTAMP}/${marker}`);
   }
   async stop(): Promise<void> {

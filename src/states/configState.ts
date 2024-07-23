@@ -20,3 +20,9 @@ export const debugModeAtom = atom({
   default: false,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const experimentTarget = atom({
+  key: "experimentTarget",
+  default: "2",
+  effects_UNSTABLE: [persistAtom],
+});

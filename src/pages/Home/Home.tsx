@@ -9,6 +9,7 @@ import { Divider, Input } from "@nextui-org/react";
 import { useRecoilState } from "recoil";
 import {
   debugModeAtom,
+  experimentTarget,
   restAPIIPAtom,
   restAPIPORTAtom,
 } from "../../states/configState";
@@ -19,6 +20,8 @@ const Home: React.FC = () => {
   const [restPORT, setRestPORT] = useRecoilState(restAPIPORTAtom);
 
   const [isTestGateway, setIsTestGateway] = useRecoilState(debugModeAtom);
+
+  const [target, setTarget] = useRecoilState(experimentTarget);
 
   const onChangeDebugMode: React.ChangeEventHandler<HTMLInputElement> = (
     event
@@ -45,6 +48,21 @@ const Home: React.FC = () => {
         </div>
         <Divider />
         <h2 className="text-3xl font-bold mb-5">{t("config.title")}</h2>
+        <h3 className="text-2xl font-bold mb-5">
+          {t("config.experiment.title")}
+        </h3>
+        <div className="flex w-full flex-wrap md:flex-nowrap gap-4 mb-5">
+          <Input
+            type="text"
+            label={t("target.input.label")}
+            placeholder={t("target.input.placeholder")}
+            value={target}
+            onChange={(e) => setTarget(e.target.value)}
+          />
+        </div>
+        <Divider />
+
+        <h3 className="text-2xl font-bold mb-5">{t("config.backend.title")}</h3>
         <Switch
           className="mb-5"
           isSelected={isTestGateway}
@@ -53,7 +71,7 @@ const Home: React.FC = () => {
           {t("debug.label")}
         </Switch>
         {isTestGateway ? null : (
-          <div>
+          <>
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4 mb-5">
               <Input
                 type="text"
@@ -72,7 +90,7 @@ const Home: React.FC = () => {
                 onChange={(e) => setRestPORT(e.target.value)}
               />
             </div>
-          </div>
+          </>
         )}
       </section>
     </PageTemplate>

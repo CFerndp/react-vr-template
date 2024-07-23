@@ -5,13 +5,17 @@
         "title.label":"BCI 300",
         "config.title": "Configuración",
         "button.save": "Guardar",
-        "debug.label": "Modo debug",
+        "debug.label": "Backend para debug",
         "ip.input.label": "Dirección IP",
         "ip.input.placeholder": "127.0.0.1",
         "port.input.label": "Puerto",
         "port.input.placeholder": "8000",
         "toast.title.success": "Configuración guardada",
         "toast.title.error": "Error al guardar la configuración",
-        "toast.title.success.debug": "Modo debug activado"
+        "toast.title.success.debug": "Modo debug activado",
+        "target.input.label": "Objetivo",
+        "target.input.placeholder": "Estimulo objetivo",
+        "config.backend.title": "Backend",
+        "config.experiment.title": "Experimento"
     }
 }

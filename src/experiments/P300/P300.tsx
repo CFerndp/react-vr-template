@@ -10,6 +10,8 @@ import {
   getStartMarkerFromNumber,
   getStopMarkerFromNumber,
 } from "./utils";
+import { useRecoilValue } from "recoil";
+import { experimentTarget } from "../../states/configState";
 
 enum ExperimentState {
   I3,
@@ -20,8 +22,6 @@ enum ExperimentState {
   STOP,
   END,
 }
-
-const TARGET = "2";
 
 // Add record timpestamp from init 100ms end 100ms
 
@@ -44,6 +44,7 @@ const MAX_STIMULUS = 6;
 const MAX_TRAIALS = 20;
 
 export const P300: React.FC = () => {
+  const TARGET = useRecoilValue<string>(experimentTarget);
   const [state, setState] = useState(ExperimentState.I3);
   const [text, setText] = useState(
     getTextFromState(ExperimentState.I3, TARGET)
@@ -74,21 +75,26 @@ export const P300: React.FC = () => {
         setText(getTextFromState(ExperimentState.I1, TARGET));
       } else if (state === ExperimentState.I1 && elapsedTime >= 1) {
         setState(ExperimentState.SHOW);
-        eegGateway.startExperiment(TARGET);
+        eegGateway.startExperiment(parseInt(TARGET, 10));
 
         instructionRef.current.visible = false;
         numberP300Ref.current.visible = true;
         const newStimulus = getNumbersByOddParadigm(MAX_STIMULUS);
         const numberToShow = newStimulus.pop();
-        setStimulus(newStimulus);
-        setNumberP300(numberToShow?.toString() || "");
 
-        rootState.clock.start();
+        if (numberToShow) {
+          setStimulus(newStimulus);
+          eegGateway.recordTimestamp(getStartMarkerFromNumber(numberToShow));
+          setNumberP300(numberToShow.toString());
+          rootState.clock.start();
+        }
       } else if (state === ExperimentState.SHOW && elapsedTime >= 0.1) {
         rootState.clock.start();
         numberP300Ref.current.visible = false;
         setState(ExperimentState.HIDE);
-        eegGateway.recordTimestamp(getStopMarkerFromNumber(numberP300));
+        eegGateway.recordTimestamp(
+          getStopMarkerFromNumber(parseInt(numberP300, 10))
+        );
       } else if (state === ExperimentState.HIDE && elapsedTime >= 0.3) {
         rootState.clock.start();
 
