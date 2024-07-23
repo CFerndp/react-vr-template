@@ -22,6 +22,6 @@ export class RESTGateway implements EEGGateway {
     await this.makePostRequest(`${this.REST_PATHS.RECORD_TIMESTAMP}/${marker}`);
   }
   async stop(): Promise<void> {
-    await this.makePostRequest(this.REST_PATHS.START_EXPERIMENT);
+    await this.makePostRequest(this.REST_PATHS.STOP);
   }
 }
