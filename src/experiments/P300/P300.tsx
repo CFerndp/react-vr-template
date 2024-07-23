@@ -43,7 +43,7 @@ const getTextFromState = (state: ExperimentState, target: string) => {
 const MAX_STIMULUS = 6;
 const MAX_TRAIALS = 20;
 
-const P300: React.FC = () => {
+export const P300: React.FC = () => {
   const [state, setState] = useState(ExperimentState.I3);
   const [text, setText] = useState(
     getTextFromState(ExperimentState.I3, TARGET)
@@ -143,5 +143,3 @@ const P300: React.FC = () => {
     </Physics>
   );
 };
-
-export default P300;

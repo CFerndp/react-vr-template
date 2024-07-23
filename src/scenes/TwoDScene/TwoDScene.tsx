@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Canvas } from "@react-three/fiber";
-import P300 from "../../experiments/P300/P300";
+import { P300 } from "../../experiments/P300/P300";
 
 const TwoDScene: React.FC = () => {
   return (

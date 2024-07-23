@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import P300 from "../../experiments/P300/P300";
+import { P300 } from "../../experiments/P300/P300";
 import { useTeleportation, useXR } from "@react-three/xr";
 import { useFrame } from "@react-three/fiber";
 import { Center } from "@react-three/drei";
