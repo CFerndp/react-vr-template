@@ -4,4 +4,5 @@ export type Text3DProps = React.PropsWithChildren & {
   font?: string;
   position?: Vector3;
   color?: string;
+  visible?: boolean;
 };

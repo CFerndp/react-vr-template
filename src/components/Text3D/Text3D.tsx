@@ -6,13 +6,14 @@ import { FONT } from "./constants";
 import { Mesh } from "three";
 
 const Text3D = React.forwardRef<Mesh, Text3DProps>(
-  ({ children, font = FONT, position, color }, ref) => {
+  ({ children, font = FONT, position, color, visible }, ref) => {
     return (
       <Text3DImpl
         font={font}
         position={position}
         material-color={color}
         ref={ref}
+        visible={visible}
       >
         {children}
       </Text3DImpl>

@@ -136,7 +136,7 @@ export const P300: React.FC = () => {
         </Text3D>
       </Center>
       <Center position={[0, 1, -5]} top>
-        <Text3D color="blue" ref={numberP300Ref}>
+        <Text3D color="blue" ref={numberP300Ref} visible={false}>
           {numberP300}
         </Text3D>
       </Center>
